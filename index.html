@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<title>Countdown Peluncuran Duta Generasi Berkarakter</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;700&display=swap');
+
+  /* Reset & base */
+  * {
+    box-sizing: border-box;
+    margin: 0; padding: 0;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #0a2540, #003d99);
+    color: #fff;
+    overflow: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    height: 100vh;
+    padding: 20px 15px;
+  }
+
+  h1 {
+    font-weight: 700;
+    font-size: 1.8rem;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.12em;
+    margin-bottom: 24px;
+    text-shadow: 0 0 10px rgba(255 255 255 / 0.35);
+    animation: fadeInDown 1s ease forwards;
+    user-select: none;
+  }
+
+  /* Countdown container */
+  .countdown {
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+    width: 100%;
+    max-width: 400px;
+    animation: pulseGlow 3s infinite alternate ease-in-out;
+  }
+
+  /* Each time unit box */
+  .time-segment {
+    background: rgba(255 255 255 / 0.1);
+    border: 2.5px solid #007bff;
+    border-radius: 12px;
+    flex: 1 1 60px;
+    padding: 14px 0;
+    box-shadow:
+      0 0 12px #007bff99,
+      0 6px 14px rgba(0, 123, 255, 0.33);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: default;
+    overflow: hidden;
+    user-select: none;
+  }
+
+  .time-label {
+    margin-top: 8px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    letter-spacing: 0.11em;
+    color: #a8c5ff;
+    text-transform: uppercase;
+  }
+
+  /* Digit container with clipping for sliding */
+  .time-number {
+    position: relative;
+    width: 3.4rem;
+    height: 3.8rem;
+    overflow: hidden;
+    font-weight: 700;
+    color: #fff;
+    font-size: 3.4rem;
+    line-height: 3.8rem;
+    font-feature-settings: "tnum";
+    -webkit-font-feature-settings: "tnum";
+  }
+
+  .digit-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3.8rem;
+    display: flex;
+    flex-direction: column;
+    will-change: transform, opacity;
+  }
+
+  .digit {
+    height: 3.8rem;
+    text-align: center;
+    color: #007bff;
+    font-weight: 900;
+    font-size: 3.4rem;
+    line-height: 3.8rem;
+  }
+
+  /* Smooth slide + fade + scale animations for digit changes */
+  @keyframes slideUpFadeOut {
+    0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+    80% {
+      transform: translateY(-110%) scale(0.9);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(-120%) scale(0.85);
+      opacity: 0;
+    }
+  }
+
+  @keyframes slideUpFadeIn {
+    0% {
+      transform: translateY(120%) scale(0.85);
+      opacity: 0;
+    }
+    20% {
+      transform: translateY(110%) scale(0.9);
+      opacity: 0.3;
+    }
+    100% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  }
+
+  /* Social media container */
+  .social-media {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 36px;
+    animation: fadeInUpScale 1.4s ease forwards;
+  }
+
+  .social-media a {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #a3c9ff;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: color 0.35s ease, transform 0.35s ease;
+  }
+
+  .social-media a:hover {
+    color: #ffffff;
+    transform: scale(1.12);
+  }
+
+  /* Instagram icon from SVG */
+  .social-media svg {
+    width: 26px;
+    height: 26px;
+    fill: currentColor;
+    filter: drop-shadow(0 0 3px rgba(0, 123, 255, 0.7));
+    transition: transform 0.35s ease;
+  }
+
+  .social-media a:hover svg {
+    transform: scale(1.3) rotate(10deg);
+  }
+
+  /* Other animations */
+  @keyframes pulseGlow {
+    0% {
+      box-shadow:
+        0 0 14px #007bffcc,
+        0 0 30px #005ecbcc;
+    }
+    100% {
+      box-shadow:
+        0 0 38px #007bffee,
+        0 0 65px #005ecbff;
+    }
+  }
+
+  @keyframes fadeInDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-25px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  @keyframes fadeInUpScale {
+    0% {
+      opacity: 0;
+      transform: translateY(12px) scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+
+  /* Responsive and mobile optimization */
+  @media (max-width: 400px) {
+    .countdown {
+      gap: 12px;
+    }
+    .time-segment {
+      padding: 12px 0;
+    }
+    .time-number,
+    .digit {
+      font-size: 2.9rem;
+      height: 3.3rem;
+      line-height: 3.3rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+  @media (max-width: 350px) {
+    body {
+      padding: 15px 10px 45px 10px;
+    }
+    .time-label {
+      font-size: 0.78rem;
+    }
+  }
+</style>
+</head>
+<body>
+<h1>Peluncuran Website<br />Duta Generasi Berkarakter</h1>
+
+<div class="countdown" aria-label="Countdown to June 1, 2025" role="timer">
+  <div class="time-segment" aria-live="polite" aria-atomic="true" aria-label="Hari">
+    <div class="time-number" id="days" aria-live="off"></div>
+  </div>
+  <div class="time-segment" aria-live="polite" aria-atomic="true" aria-label="Jam">
+    <div class="time-number" id="hours" aria-live="off"></div>
+  </div>
+  <div class="time-segment" aria-live="polite" aria-atomic="true" aria-label="Menit">
+    <div class="time-number" id="minutes" aria-live="off"></div>
+  </div>
+  <div class="time-segment" aria-live="polite" aria-atomic="true" aria-label="Detik">
+    <div class="time-number" id="seconds" aria-live="off"></div>
+  </div>
+</div>
+
+<!-- Social media below countdown -->
+<div class="social-media" aria-label="Social media contact">
+  <a href="https://instagram.com/dutagenker" target="_blank" rel="noopener noreferrer" aria-label="Instagram @dutagenker">
+    <svg aria-hidden="true" focusable="false" viewBox="0 0 24 24">
+      <path d="M7.75 2h8.5A5.75 5.75 0 0122 7.75v8.5A5.75 5.75 0 0116.25 22h-8.5A5.75 5.75 0 012 16.25v-8.5A5.75 5.75 0 017.75 2zm0 1.5A4.25 4.25 0 003.5 7.75v8.5A4.25 4.25 0 007.75 20.5h8.5a4.25 4.25 0 004.25-4.25v-8.5A4.25 4.25 0 0016.25 3.5h-8.5zm8.25 3a1 1 0 110 2 1 1 0 010-2zm-4.25 1.5a5.75 5.75 0 110 11.5 5.75 5.75 0 010-11.5zm0 1.5a4.25 4.25 0 100 8.5 4.25 4.25 0 000-8.5z"/>
+    </svg>
+    @dutagenker
+  </a>
+</div>
+
+<script>
+  (function() {
+    // Create digit wrapper with current and next digit for animation
+    function createDigitWrapper(value) {
+      const wrapper = document.createElement('div');
+      wrapper.classList.add('digit-wrapper');
+
+      const digitCurrent = document.createElement('div');
+      digitCurrent.classList.add('digit');
+      digitCurrent.textContent = value;
+
+      const digitNew = document.createElement('div');
+      digitNew.classList.add('digit');
+      // position new digit below visible area
+      digitNew.style.position = 'absolute';
+      digitNew.style.top = '120%';
+      digitNew.style.left = '0';
+      digitNew.style.right = '0';
+      digitNew.style.opacity = '0';
+
+      wrapper.appendChild(digitCurrent);
+      wrapper.appendChild(digitNew);
+      return wrapper;
+    }
+
+    // Initialize containers with digit wrappers
+    const daysEl = document.getElementById('days');
+    const hoursEl = document.getElementById('hours');
+    const minutesEl = document.getElementById('minutes');
+    const secondsEl = document.getElementById('seconds');
+
+    function initDigitContainer(container) {
+      if (!container.querySelector('.digit-wrapper')) {
+        const wrapper = createDigitWrapper('0');
+        container.textContent = '';
+        container.appendChild(wrapper);
+      }
+    }
+    [daysEl, hoursEl, minutesEl, secondsEl].forEach(initDigitContainer);
+
+    // Target date: June 1, 2025 00:00:00 local time
+    const targetDate = new Date('2025-07-01T00:00:00');
+
+    // Animate digit change with smooth slide up + fade + scale effect
+    // Returns a promise to signal animation end
+    function animateDigitChange(wrapper, newValue) {
+      return new Promise((resolve) => {
+        const digits = wrapper.children;
+        const oldDigit = digits[0];
+        const newDigit = digits[1];
+
+        if (oldDigit.textContent === newValue) {
+          resolve(); // no change
+          return;
+        }
+
+        newDigit.textContent = newValue;
+        newDigit.style.top = '120%';
+        newDigit.style.opacity = '0';
+
+        // Animate oldDigit slide up fade out
+        oldDigit.style.animation = 'slideUpFadeOut 0.5s forwards ease-in-out';
+
+        // Animate newDigit slide in fade in
+        newDigit.style.animation = 'slideUpFadeIn 0.5s forwards ease-in-out';
+
+        setTimeout(() => {
+          // Reset styles after animation
+          oldDigit.textContent = newValue;
+          oldDigit.style.animation = '';
+          oldDigit.style.top = '0';
+          oldDigit.style.opacity = '1';
+
+          newDigit.style.animation = '';
+          newDigit.style.top = '120%';
+          newDigit.style.opacity = '0';
+
+          resolve();
+        }, 500);
+      });
+    }
+
+    async function updateDigit(container, newValue) {
+      const wrapper = container.querySelector('.digit-wrapper');
+      if (!wrapper) return;
+      await animateDigitChange(wrapper, newValue);
+    }
+
+    async function updateCountdown() {
+      const now = new Date();
+      const diff = targetDate - now;
+
+      if (diff <= 0) {
+        await Promise.all(
+          ['days', 'hours', 'minutes', 'seconds'].map(id => {
+            const el = document.getElementById(id);
+            return updateDigit(el, '0');
+          })
+        );
+        clearInterval(timerId);
+        return;
+      }
+
+      const seconds = Math.floor((diff / 1000) % 60).toString();
+      const minutes = Math.floor((diff / 1000 / 60) % 60).toString();
+      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24).toString();
+      const days = Math.floor(diff / (1000 * 60 * 60 * 24)).toString();
+
+      await updateDigit(daysEl, days);
+      await updateDigit(hoursEl, hours);
+      await updateDigit(minutesEl, minutes);
+      await updateDigit(secondsEl, seconds);
+    }
+
+    updateCountdown();
+    const timerId = setInterval(updateCountdown, 1000);
+  })();
+</script>
+
+</body>
+</html>
+</content>
+</create_file>
