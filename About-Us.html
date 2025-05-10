@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duta Generasi Berkarakter</title>
-  <link rel="icon" href="https://iili.io/3e04va4.png" type="image/png">
+  <title>Tentang Kami - Duta Generasi Berkarakter</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
     :root {
@@ -165,6 +164,27 @@
     
     .mission li {
       margin-bottom: 15px;
+    }
+    
+    .history {
+      background: var(--white);
+      border-radius: 10px;
+      padding: 30px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      margin-bottom: 40px;
+    }
+    
+    .history p {
+      margin-bottom: 20px;
+    }
+    
+    .motto {
+      text-align: center;
+      font-size: 1.8rem;
+      color: var(--secondary);
+      font-weight: bold;
+      margin: 40px 0;
+      font-style: italic;
     }
     
     .page-cards {
@@ -348,7 +368,7 @@
       </div>
       <nav>
         <ul>
-          <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
           <li><a href="Pendaftaran-Generasi.html"><i class="fas fa-user-plus"></i> Pendaftaran</a></li>
           <li><a href="Pengumuman.html"><i class="fas fa-bullhorn"></i> Pengumuman</a></li>
           <li><a href="About-Us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
@@ -362,18 +382,33 @@
       <div class="typing-container">
         <span id="typed-text"></span><span id="cursor">|</span>
       </div>
-      <p class="subtitle">Generasi Berkarakter, Membangun Negeri</p>
+      <p class="subtitle">Ayo kita kenalan dengan Duta Generasi Berkarakter</p>
       <div class="scroll-down">
         <i class="fas fa-chevron-down"></i>
       </div>
     </section>
 
-    <section id="visi-misi">
+    <section id="about-us">
       <div class="container">
         <div class="section-title">
-          <h2>Visi & Misi</h2>
+          <h2>Tentang Kami</h2>
         </div>
         
+        <div class="history">
+          <h3>Sejarah Singkat</h3>
+          <p>Pada tahun 2023, muncul pemikiran untuk membentuk Duta Generasi Berkarakter sebagai wadah pengembangan karakter generasi muda. Saat itu, ide ini masih berupa konsep yang belum bisa diwujudkan karena berbagai keterbatasan waktu dan sumber daya.</p>
+          
+          <p>Memasuki tahun 2024, langkah konkret mulai dilakukan dengan membuat logo dan website awal. Meskipun platform digital sudah tersedia, niat untuk mengembangkan program ini secara penuh masih belum matang. Proses perencanaan terus berlanjut dengan berbagai pertimbangan.</p>
+          
+          <p>Tahun 2018 menjadi titik penting dimana persiapan lebih serius dilakukan. Logo baru yang sekarang digunakan resmi diluncurkan, memberikan identitas visual yang lebih kuat bagi organisasi. Bersamaan dengan itu, berbagai platform media sosial seperti akun Instagram, YouTube, dan Gmail resmi dibentuk untuk memperluas jangkauan.</p>
+          
+          <p>Inspirasi pembentukan Duta Generasi Berkarakter berawal dari program "Cerdas Berkarakter". Melihat potensi besar generasi muda Indonesia, muncul keyakinan bahwa wadah seperti ini dapat memberikan dampak positif bagi pembangunan karakter bangsa. Dengan semangat inilah Duta Generasi Berkarakter terus berkembang hingga saat ini.</p>
+        </div>
+        
+        <div class="motto">
+          "Generasi Berkarakter, Membangun Negeri"
+        </div>
+
         <div class="vision-mission">
           <div class="vision">
             <h3>Visi</h3>
@@ -414,9 +449,9 @@
           <div class="page-card">
             <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tentang Kami">
             <div class="page-content">
-              <h3>Tentang Kami</h3>
-              <p>Ketahui lebih lanjut tentang Duta Generasi Berkarakter dan apa yang kami lakukan.</p>
-              <a href="About-Us.html" class="btn">Selengkapnya</a>
+              <h3>Beranda</h3>
+              <p>Kembali ke halaman utama Duta Generasi Berkarakter.</p>
+              <a href="index.html" class="btn">Kembali ke Beranda</a>
             </div>
           </div>
         </div>
@@ -445,7 +480,7 @@
       <div class="footer-links">
         <h3>Halaman</h3>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="Pendaftaran-Generasi.html">Pendaftaran</a></li>
           <li><a href="Pengumuman.html">Pengumuman</a></li>
           <li><a href="About-Us.html">About Us</a></li>
@@ -469,7 +504,7 @@
 
   <script>
     // Typing animation
-    const text = "Selamat Datang di Duta Generasi Berkarakter";
+    const text = "Tentang Duta Generasi Berkarakter";
     let charIndex = 0;
     
     function type() {
@@ -490,7 +525,7 @@
     
     // Scroll down button
     document.querySelector('.scroll-down').addEventListener('click', () => {
-      document.getElementById('visi-misi').scrollIntoView({ 
+      document.getElementById('about-us').scrollIntoView({ 
         behavior: 'smooth' 
       });
     });

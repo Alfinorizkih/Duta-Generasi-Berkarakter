@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Duta Generasi Berkarakter</title>
+  <title>Pengumuman - Duta Generasi Berkarakter</title>
   <link rel="icon" href="https://iili.io/3e04va4.png" type="image/png">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <style>
@@ -13,6 +13,10 @@
       --accent: #00b4d8;
       --light: #caf0f8;
       --white: #ffffff;
+      --success: #2ecc71;
+      --danger: #e74c3c;
+      --light-success: rgba(46, 204, 113, 0.1);
+      --light-danger: rgba(231, 76, 60, 0.1);
     }
     
     * {
@@ -92,21 +96,17 @@
       margin-top: 80px;
     }
     
-    .typing-container {
+    .hero-title {
       font-size: 2.5rem;
       font-weight: bold;
       margin-bottom: 20px;
     }
     
-    #cursor {
-      animation: blink 0.7s infinite;
-      color: var(--accent);
-    }
-    
-    .subtitle {
+    .hero-subtitle {
       font-size: 1.5rem;
       color: var(--secondary);
       margin-bottom: 40px;
+      max-width: 800px;
     }
     
     .scroll-down {
@@ -124,101 +124,53 @@
       padding: 80px 20px;
     }
     
-    section {
-      padding: 60px 0;
-    }
-    
-    .section-title {
-      text-align: center;
-      margin-bottom: 50px;
-    }
-    
-    .section-title h2 {
-      font-size: 2.2rem;
-      color: var(--primary);
-      margin-bottom: 15px;
-    }
-    
-    .vision-mission {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 40px;
-      margin-bottom: 60px;
-    }
-    
-    @media (min-width: 768px) {
-      .vision-mission {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-    
-    .vision, .mission {
+    .announcement-container {
       background: var(--white);
       border-radius: 10px;
       padding: 30px;
       box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+      overflow-x: auto;
     }
     
-    .mission ol {
-      padding-left: 20px;
-    }
-    
-    .mission li {
-      margin-bottom: 15px;
-    }
-    
-    .page-cards {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 30px;
-      margin-top: 50px;
-    }
-    
-    .page-card {
-      background: var(--white);
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 5px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
-    }
-    
-    .page-card:hover {
-      transform: translateY(-5px);
-    }
-    
-    .page-card img {
+    table {
       width: 100%;
-      height: 200px;
-      object-fit: cover;
+      border-collapse: collapse;
+      margin-top: 20px;
     }
     
-    .page-content {
-      padding: 20px;
+    th, td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
     }
     
-    .page-content h3 {
+    th {
+      background-color: var(--light);
       color: var(--primary);
-      margin-bottom: 10px;
-    }
-    
-    .page-content p {
-      color: #666;
-      margin-bottom: 20px;
-    }
-    
-    .btn {
-      display: inline-block;
-      padding: 10px 20px;
-      background: var(--secondary);
-      color: var(--white);
-      border-radius: 5px;
-      text-decoration: none;
       font-weight: 600;
-      transition: all 0.3s ease;
     }
     
-    .btn:hover {
-      background: var(--accent);
+    tr:hover {
+      background-color: rgba(0, 180, 216, 0.05);
+    }
+    
+    .status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-weight: 600;
+      text-align: center;
+      display: inline-block;
+      min-width: 80px;
+    }
+    
+    .status.lolos {
+      background-color: var(--light-success);
+      color: var(--success);
+    }
+    
+    .status.gagal {
+      background-color: var(--light-danger);
+      color: var(--danger);
     }
     
     footer {
@@ -298,11 +250,6 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     
-    @keyframes blink {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0; }
-    }
-    
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -336,6 +283,15 @@
       nav ul li {
         margin: 10px 0;
       }
+      
+      table {
+        display: block;
+      }
+      
+      th, td {
+        padding: 8px 10px;
+        font-size: 0.9rem;
+      }
     }
   </style>
 </head>
@@ -348,7 +304,7 @@
       </div>
       <nav>
         <ul>
-          <li><a href="#"><i class="fas fa-home"></i> Home</a></li>
+          <li><a href="index.html"><i class="fas fa-home"></i> Home</a></li>
           <li><a href="Pendaftaran-Generasi.html"><i class="fas fa-user-plus"></i> Pendaftaran</a></li>
           <li><a href="Pengumuman.html"><i class="fas fa-bullhorn"></i> Pengumuman</a></li>
           <li><a href="About-Us.html"><i class="fas fa-info-circle"></i> About Us</a></li>
@@ -359,69 +315,82 @@
 
   <main>
     <section class="hero">
-      <div class="typing-container">
-        <span id="typed-text"></span><span id="cursor">|</span>
-      </div>
-      <p class="subtitle">Generasi Berkarakter, Membangun Negeri</p>
+      <h1 class="hero-title">Pengumuman Duta Generasi Berkarakter</h1>
+      <p class="hero-subtitle">Selamat bagi yang lolos dan jangan berkecil hati bagi yang tidak lolos</p>
       <div class="scroll-down">
         <i class="fas fa-chevron-down"></i>
       </div>
     </section>
 
-    <section id="visi-misi">
-      <div class="container">
-        <div class="section-title">
-          <h2>Visi & Misi</h2>
-        </div>
+    <div class="container">
+      <div class="announcement-container">
+        <h2>Hasil Seleksi Peserta</h2>
+        <p>Berikut adalah daftar peserta yang lolos seleksi Duta Generasi Berkarakter:</p>
         
-        <div class="vision-mission">
-          <div class="vision">
-            <h3>Visi</h3>
-            <p>Mewujudkan generasi muda yang berkarakter mulia, berintegritas tinggi, dan aktif berpartisipasi dalam membangun bangsa yang beradab dan maju.</p>
-          </div>
-          
-          <div class="mission">
-            <h3>Misi</h3>
-            <ol>
-              <li>Menanamkan nilai-nilai karakter positif seperti kejujuran, disiplin, tanggung jawab, dan peduli terhadap orang lain dalam kehidupan sehari-hari.</li>
-              <li>Menjadi teladan bagi siswa lain dalam sikap, kata-kata, dan tindakan.</li>
-              <li>Mendorong pemuda untuk aktif berpartisipasi dalam kegiatan sosial, pendidikan, dan budaya yang membangun bangsa.</li>
-              <li>Membina potensi generasi muda melalui program-program yang edukatif, menginspirasi, dan inovatif.</li>
-              <li>Bekerja sama dengan berbagai pihak untuk memperkuat upaya pemuda sebagai agen perubahan karakter yang aktif.</li>
-            </ol>
-          </div>
-        </div>
-
-        <div class="page-cards">
-          <div class="page-card">
-            <img src="https://images.unsplash.com/photo-1523050854058-8df90110c9f1?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pendaftaran">
-            <div class="page-content">
-              <h3>Pendaftaran Duta</h3>
-              <p>Bergabunglah menjadi bagian dari Duta Generasi Berkarakter dan jadilah agen perubahan untuk bangsa.</p>
-              <a href="Pendaftaran-Generasi.html" class="btn">Daftar Sekarang</a>
-            </div>
-          </div>
-          
-          <div class="page-card">
-            <img src="https://images.unsplash.com/photo-1434030216411-0b793f4b4173?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Pengumuman">
-            <div class="page-content">
-              <h3>Pengumuman</h3>
-              <p>Lihat pengumuman terbaru seputar kegiatan dan informasi dari Duta Generasi Berkarakter.</p>
-              <a href="Pengumuman.html" class="btn">Lihat Pengumuman</a>
-            </div>
-          </div>
-          
-          <div class="page-card">
-            <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80" alt="Tentang Kami">
-            <div class="page-content">
-              <h3>Tentang Kami</h3>
-              <p>Ketahui lebih lanjut tentang Duta Generasi Berkarakter dan apa yang kami lakukan.</p>
-              <a href="About-Us.html" class="btn">Selengkapnya</a>
-            </div>
-          </div>
-        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>No</th>
+              <th>Nama</th>
+              <th>Asal Provinsi</th>
+              <th>Asal Sekolah</th>
+              <th>Job</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>1</td>
+              <td>Ahmad Budiman</td>
+              <td>Lampung</td>
+              <td>SMA Negeri 1 Bandar Lampung</td>
+              <td>Pelajar</td>
+              <td><span class="status lolos">Lolos</span></td>
+            </tr>
+            <tr>
+              <td>2</td>
+              <td>Siti Nurhaliza</td>
+              <td>Jawa Barat</td>
+              <td>SMA Negeri 3 Bandung</td>
+              <td>Pelajar</td>
+              <td><span class="status lolos">Lolos</span></td>
+            </tr>
+            <tr>
+              <td>3</td>
+              <td>Budi Santoso</td>
+              <td>Jawa Timur</td>
+              <td>SMA Negeri 1 Surabaya</td>
+              <td>Pelajar</td>
+              <td><span class="status gagal">Gagal</span></td>
+            </tr>
+            <tr>
+              <td>4</td>
+              <td>Ani Wijaya</td>
+              <td>DKI Jakarta</td>
+              <td>SMA Negeri 8 Jakarta</td>
+              <td>Pelajar</td>
+              <td><span class="status lolos">Lolos</span></td>
+            </tr>
+            <tr>
+              <td>5</td>
+              <td>Rudi Hermawan</td>
+              <td>Banten</td>
+              <td>SMA Negeri 1 Tangerang</td>
+              <td>Pelajar</td>
+              <td><span class="status gagal">Gagal</span></td>
+            </tr>
+            <tr>
+              <td>6</td>
+              <td>Dewi Lestari</td>
+              <td>Bali</td>
+              <td>SMA Negeri 1 Denpasar</td>
+              <td>Pelajar</td>
+              <td><span class="status lolos">Lolos</span></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
-    </section>
+    </div>
   </main>
 
   <footer>
@@ -445,7 +414,7 @@
       <div class="footer-links">
         <h3>Halaman</h3>
         <ul>
-          <li><a href="#">Home</a></li>
+          <li><a href="index.html">Home</a></li>
           <li><a href="Pendaftaran-Generasi.html">Pendaftaran</a></li>
           <li><a href="Pengumuman.html">Pengumuman</a></li>
           <li><a href="About-Us.html">About Us</a></li>
@@ -463,23 +432,16 @@
     </div>
     
     <div class="copyright">
-      <p>&copy; 2025 Duta Generasi Berkarakter. All Rights Reserved.</p>
+      <p>&copy; 2025 Duta Generasi Berkarakter. Seluruh hak cipta dilindungi.</p>
     </div>
   </footer>
 
+  <audio id="bg-audio" autoplay loop>
+    <source src="audio1.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <script>
-    // Typing animation
-    const text = "Selamat Datang di Duta Generasi Berkarakter";
-    let charIndex = 0;
-    
-    function type() {
-      if (charIndex < text.length) {
-        document.getElementById("typed-text").textContent += text.charAt(charIndex);
-        charIndex++;
-        setTimeout(type, 100);
-      }
-    }
-    
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
     const nav = document.querySelector('nav');
@@ -490,13 +452,23 @@
     
     // Scroll down button
     document.querySelector('.scroll-down').addEventListener('click', () => {
-      document.getElementById('visi-misi').scrollIntoView({ 
+      document.querySelector('.container').scrollIntoView({ 
         behavior: 'smooth' 
       });
     });
     
-    // Start typing animation when page loads
-    window.onload = type;
+    // Audio autoplay with fallback
+    const audio = document.getElementById('bg-audio');
+    
+    // Try to play audio (many browsers block autoplay)
+    const playPromise = audio.play();
+    
+    if (playPromise !== undefined) {
+      playPromise.catch(error => {
+        console.log("Autoplay was prevented, showing play button");
+        // You can show a play button here if needed
+      });
+    }
   </script>
 </body>
 </html>
