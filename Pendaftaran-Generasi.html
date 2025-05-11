@@ -365,6 +365,34 @@
       transform: translateY(-3px);
     }
     
+    /* Registration Status Styles */
+    .registration-status {
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      text-align: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+    }
+    
+    .registration-open {
+      background-color: #e3f7fd;
+      border-left: 5px solid var(--accent);
+      color: var(--primary);
+    }
+    
+    .registration-closed {
+      background-color: #fff3cd;
+      border-left: 5px solid #ffc107;
+      color: #856404;
+    }
+    
+    .warning-icon {
+      font-size: 1.5rem;
+    }
+    
     /* Animations */
     @keyframes popIn {
       from { opacity: 0; transform: scale(0.8); }
@@ -419,6 +447,10 @@
         </div>
         
         <div class="form-card">
+          <div id="registrationStatus" class="registration-status">
+            <!-- Status will be filled by JavaScript -->
+          </div>
+          
           <form id="daftarForm">
             <div class="form-grid">
               <div class="form-group">
@@ -679,6 +711,53 @@
   </div>
 
   <script>
+   <!-- UBAH TANGGAL PENDAFTARAN DISINIIIII -->
+    const publicationDate = new Date('2025-04-20'); // Example: May 1, 2025
+    const expirationWeeks = 3;
+    
+    function updateRegistrationStatus() {
+      const now = new Date();
+      const expirationDate = new Date(publicationDate);
+      expirationDate.setDate(expirationDate.getDate() + (expirationWeeks * 7));
+      
+      const statusElement = document.getElementById('registrationStatus');
+      const formElement = document.getElementById('daftarForm');
+      
+      if (now < expirationDate) {
+        // Registration is still open
+        const daysLeft = Math.ceil((expirationDate - now) / (1000 * 60 * 60 * 24));
+        
+        statusElement.className = 'registration-status registration-open';
+        statusElement.innerHTML = `
+          <i class="fas fa-info-circle warning-icon"></i>
+          <div>
+            <strong>Pendaftaran dibuka!</strong> 
+            Batas pendaftaran: ${expirationDate.toLocaleDateString('id-ID', { 
+              weekday: 'long', 
+              year: 'numeric', 
+              month: 'long', 
+              day: 'numeric' 
+            })} 
+            (${daysLeft} hari lagi)
+          </div>
+        `;
+        
+        formElement.style.display = 'block';
+      } else {
+        // Registration has closed
+        statusElement.className = 'registration-status registration-closed';
+        statusElement.innerHTML = `
+          <i class="fas fa-exclamation-triangle warning-icon"></i>
+          <div>
+            <strong>Pendaftaran telah ditutup</strong> - 
+            Sampai jumpa di pendaftaran selanjutnya!
+          </div>
+        `;
+        
+        formElement.style.display = 'none';
+      }
+    }
+
     // Typing animation for header
     const texts = ["Saatnya kamu menjadi Duta Generasi Berkarakter!", "Saatnya kamu jadi bintang provinsimu!"];
     let count = 0, index = 0, currentText = "", letter = "", isDeleting = false;
@@ -860,6 +939,14 @@ ${formData.get("prestasi")}
         else setTimeout(startThankTyping, 50);
       }
     }
+
+    // Initialize registration status when page loads
+    document.addEventListener('DOMContentLoaded', function() {
+      updateRegistrationStatus();
+      
+      // You might also want to check periodically (every day)
+      setInterval(updateRegistrationStatus, 24 * 60 * 60 * 1000);
+    });
   </script>
 </body>
 </html>
