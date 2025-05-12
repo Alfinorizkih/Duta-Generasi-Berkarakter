@@ -268,6 +268,33 @@
       border-top: 1px solid rgba(255,255,255,0.1);
     }
     
+    /* Audio control styles */
+    .audio-control {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background-color: var(--primary);
+      color: white;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+      z-index: 1000;
+      transition: all 0.3s ease;
+    }
+    
+    .audio-control i {
+      font-size: 1.5rem;
+    }
+    
+    .audio-control.muted {
+      background-color: var(--danger);
+    }
+    
     @keyframes bounce {
       0%, 100% { transform: translateY(0); }
       50% { transform: translateY(-10px); }
@@ -434,7 +461,7 @@
           <a href="https://youtube.com/dutagenkar" class="social-link">
             <i class="fab fa-youtube"></i>
           </a>
-          <a href="https://www.tiktok.com/@dutagenkar.id" class="social-link">
+                    <a href="https://www.tiktok.com/@dutagenkar.id" class="social-link">
             <i class="fab fa-tiktok"></i>
           </a>
         </div>
@@ -465,6 +492,17 @@
     </div>
   </footer>
 
+  <!-- Audio element (hidden) -->
+  <audio id="welcome-audio" loop>
+    <source src="audio1.mp3" type="audio/mpeg">
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+
+  <!-- Audio control button -->
+  <div class="audio-control" id="audio-control">
+    <i class="fas fa-volume-up"></i>
+  </div>
+
   <script>
     // Mobile menu toggle
     const menuToggle = document.querySelector('.menu-toggle');
@@ -483,27 +521,56 @@
     
     // Check if announcement is expired (1 month after publication)
     document.addEventListener('DOMContentLoaded', function() {
-<!-- TEMPAT NGUBAH TANGGALLLLLLLL -->
-      const publicationDate = new Date('2025-04-01'); // Example: May 1, 2025
-      
-      // Calculate expiration date (1 month after publication)
+      const publicationDate = new Date('2025-04-01');
       const expirationDate = new Date(publicationDate);
       expirationDate.setMonth(expirationDate.getMonth() + 1);
-      
-      // Get current date
       const currentDate = new Date();
       
-      // Check if announcement is expired
       if (currentDate > expirationDate) {
-        // Hide the participants table
         document.getElementById('participants-table').style.display = 'none';
-        
-        // Change the announcement text
         document.getElementById('announcement-text').textContent = "Pengumuman ini telah kadaluarsa.";
-        
-        // Show expired message
         document.getElementById('expired-message').style.display = 'block';
       }
+      
+      // Audio control functionality
+      const audio = document.getElementById('welcome-audio');
+      const audioControl = document.getElementById('audio-control');
+      let isPlaying = false;
+      
+      // Function to handle audio play
+      function playAudio() {
+        audio.play()
+          .then(() => {
+            isPlaying = true;
+            audioControl.classList.remove('muted');
+            audioControl.innerHTML = '<i class="fas fa-volume-up"></i>';
+          })
+          .catch(error => {
+            console.log('Audio play failed:', error);
+            isPlaying = false;
+            audioControl.classList.add('muted');
+            audioControl.innerHTML = '<i class="fas fa-volume-mute"></i>';
+          });
+      }
+      
+      // Try to play audio when page loads
+      playAudio();
+      
+      // Audio control button click handler
+      audioControl.addEventListener('click', function() {
+        if (isPlaying) {
+          audio.pause();
+          isPlaying = false;
+          this.classList.add('muted');
+          this.innerHTML = '<i class="fas fa-volume-mute"></i>';
+        } else {
+          playAudio();
+        }
+      });
+      
+      // Also try to play when user interacts with the page
+      document.addEventListener('click', playAudio);
+      document.addEventListener('keydown', playAudio);
     });
   </script>
 </body>
